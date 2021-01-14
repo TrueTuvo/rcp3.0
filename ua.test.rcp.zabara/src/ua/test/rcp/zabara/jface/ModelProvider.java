@@ -1,16 +1,14 @@
 package ua.test.rcp.zabara.jface;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import ua.test.rcp.zabara.Utils;
 
 /**
  * 
@@ -35,23 +33,8 @@ public enum ModelProvider {
 
         List<Person> persons = new ArrayList<Person>();
 
-        URL url = null;
-        try {
-            url = new URL("platform:/plugin/com.rcp.practice.zabara/database.txt");
-        } catch (MalformedURLException e2) {
-            // TODO Auto-generated catch block
-            e2.printStackTrace();
-        }
-        File file = null;
-        file = new File("C:\\luxoft\\database.txt");
+        File file = new File(Utils.DATABASE_PATH);
 
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                System.err.println("Failed to create the DATABASE file");
-            }
-        }
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
             while (br.ready()) {

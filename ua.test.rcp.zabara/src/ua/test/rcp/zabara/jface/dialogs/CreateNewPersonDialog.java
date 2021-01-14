@@ -1,4 +1,4 @@
-package ua.test.rcp.zabara.jface;
+package ua.test.rcp.zabara.jface.dialogs;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -9,10 +9,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import ua.test.rcp.zabara.TableViewerPart;
+import ua.test.rcp.zabara.Utils;
 import ua.test.rcp.zabara.composite.attachments.InputFields;
 import ua.test.rcp.zabara.composite.attachments.SWTDoneCheckLine;
-
+import ua.test.rcp.zabara.jface.Person;
+import ua.test.rcp.zabara.parts.TableViewerPart;
 
 /**
  * 
@@ -62,7 +63,7 @@ public class CreateNewPersonDialog extends Dialog {
             name = inputFields.getNameTextField().getText();
             group = Integer.parseInt(inputFields.getGroupTextField().getText());
             swtDone = swtDoneCheckLine.getSwtDoneButton().getSelection();
-            
+
         } catch (NumberFormatException e) {
             MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Incorrect input",
                     "Your input was empty. Please, put the correct data");

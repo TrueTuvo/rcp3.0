@@ -1,5 +1,4 @@
-package ua.test.rcp.zabara.jface;
-
+package ua.test.rcp.zabara;
 
 import java.net.URL;
 
@@ -9,9 +8,16 @@ import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
 
 import ua.test.rcp.zabara.composite.attachments.MainComposite;
+import ua.test.rcp.zabara.jface.Person;
+import ua.test.rcp.zabara.parts.CompositePart;
+import ua.test.rcp.zabara.parts.TableViewerPart;
 
 /**
  * Using for simplification routine operation. consist of static methods and constants.
@@ -21,14 +27,19 @@ import ua.test.rcp.zabara.composite.attachments.MainComposite;
  */
 public class Utils {
 
+    public static final String COMMAND_NEW = "ua.test.rcp.zabara.command.new";
+    public static final String COMMAND_SAVE = "ua.test.rcp.zabara.command.save";
+    public static final String COMMAND_DELETE = "ua.test.rcp.zabara.command.delete";
+    public static final String COMMAND_CANCEL = "ua.test.rcp.zabara.command.cancel";
+
+    public static final String DATABASE_PATH = "C:\\luxoft\\database.txt";
+
     /**
      * Object of this class we won't create
      */
     private Utils() {
         super();
     }
-
-    public static final String FILE_PATH = "database.txt";
 
     /**
      * Writes person's data to fields of the right side
@@ -122,23 +133,52 @@ public class Utils {
 
         return result;
     }
+
+    /**
+     * execute handler of the chosen command using IhandleService
+     * 
+     * @param command command for execution;
+     * @param service interface, which contains same method
+     */
     public static void executeCommand(String command, IHandlerService service) {
         try {
             service.executeCommand(command, null);
-//            new NewPersonHandler().execute(null);
-        } catch (ExecutionException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        } catch (NotDefinedException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        } catch (NotEnabledException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        } catch (NotHandledException e1) {
-            // TODO Auto-generated catch block
+        } catch (ExecutionException | NotDefinedException | NotEnabledException | NotHandledException e1) {
             e1.printStackTrace();
         }
-    
+    }
+
+    /**
+     * returns current TableViewerPart's object of the app
+     * 
+     * @return TableViewerPart's object of the app
+     */
+    public static TableViewerPart getTableViewerPart() {
+        IWorkbenchPage tablePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        IViewPart tableViewPart = null;
+        try {
+            tableViewPart = tablePage.showView(TableViewerPart.ID);
+        } catch (PartInitException e) {
+            e.printStackTrace();
+        }
+        return (TableViewerPart) tableViewPart;
+
+    }
+
+    /**
+     * returns current CompositePart's object of the app
+     * 
+     * @return CompositePart's object of the app
+     */
+    public static CompositePart getCompositePart() {
+        IWorkbenchPage compositePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        IViewPart compositeViewPart = null;
+        try {
+            compositeViewPart = compositePage.showView(CompositePart.ID);
+        } catch (PartInitException e) {
+            e.printStackTrace();
+        }
+        return (CompositePart) compositeViewPart;
+
     }
 }

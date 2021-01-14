@@ -1,4 +1,4 @@
-package ua.test.rcp.zabara.jface;
+package ua.test.rcp.zabara.jface.dialogs;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
@@ -10,7 +10,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import ua.test.rcp.zabara.TableViewerPart;
+import ua.test.rcp.zabara.jface.Person;
+import ua.test.rcp.zabara.parts.TableViewerPart;
 
 /**
  * 
@@ -33,8 +34,8 @@ public class DeletePersonDialog extends Dialog {
         Composite container = (Composite) super.createDialogArea(parent);
         Label label = new Label(container, SWT.FILL);
         label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        label.setText(String.format("Do you really want to delete %s person?",
-                tableViewerPart.getCurrentPerson().getName()));
+        label.setText(
+                String.format("Do you really want to delete %s person?", tableViewerPart.getCurrentPerson().getName()));
 
         return container;
 

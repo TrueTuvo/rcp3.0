@@ -1,8 +1,7 @@
-package ua.test.rcp.zabara;
+package ua.test.rcp.zabara.parts;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
@@ -13,11 +12,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -27,19 +23,15 @@ import ua.test.rcp.zabara.jface.CheckBoxLabelProvider;
 import ua.test.rcp.zabara.jface.ModelProvider;
 import ua.test.rcp.zabara.jface.Person;
 
-
-
-
 /**
  * This class need for customize and control of table viewer
  * 
  * @author SZabara
  *
  */
-public class TableViewerPart extends ViewPart{
+public class TableViewerPart extends ViewPart {
 
     public static final String ID = "ua.test.rcp.zabara.view.table";
-    
 
     private TableViewer viewer;
 
@@ -52,31 +44,29 @@ public class TableViewerPart extends ViewPart{
         GridLayout layout = new GridLayout(2, false);
         parent.setLayout(layout);
         createViewer(parent);
-        
-        ISelectionService ss = getSite().getWorkbenchWindow().getSelectionService();
- 
+
         viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            
+
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
                 Person selectedPerson = (Person) viewer.getStructuredSelection().getFirstElement();
                 IWorkbenchPage compositePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
                 IViewPart compositeViewPart = null;
                 try {
-                    compositeViewPart = compositePage.showView("ua.test.rcp.zabara.view.composite");
+                    compositeViewPart = compositePage.showView(CompositePart.ID);
                 } catch (PartInitException e) {
                     e.printStackTrace();
                 }
                 CompositePart compositePart = (CompositePart) compositeViewPart;
                 MainComposite mainComposite = compositePart.getMainComposite();
-                if (selectedPerson!=null) {
+                if (selectedPerson != null) {
                     mainComposite.getNameTextField().setText(selectedPerson.getName());
                     mainComposite.getGroupTextField().setText(String.valueOf(selectedPerson.getGroup()));
                     mainComposite.getSwtCheckdone().setSelection(selectedPerson.isSwtDone());
                 }
-                }      
-            });  
-        
+            }
+        });
+
     }
 
     /**
@@ -104,7 +94,7 @@ public class TableViewerPart extends ViewPart{
         gridData.grabExcessVerticalSpace = true;
         gridData.horizontalAlignment = GridData.FILL;
         viewer.getControl().setLayoutData(gridData);
-        
+
     }
 
     /**

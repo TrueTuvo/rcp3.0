@@ -1,6 +1,5 @@
 package ua.test.rcp.zabara.composite.attachments;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
@@ -13,8 +12,6 @@ import org.eclipse.swt.widgets.Composite;
  *
  */
 public class ManageButtons extends Composite {
-     
-    
 
     private final Button newPersonButton;
 

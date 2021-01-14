@@ -1,23 +1,22 @@
 package ua.test.rcp.zabara.handlers;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-
-import ua.test.rcp.zabara.CompositePart;
-import ua.test.rcp.zabara.TableViewerPart;
+import ua.test.rcp.zabara.Utils;
 import ua.test.rcp.zabara.jface.ModelProvider;
 import ua.test.rcp.zabara.jface.Person;
-import ua.test.rcp.zabara.jface.Utils;
+import ua.test.rcp.zabara.parts.CompositePart;
+import ua.test.rcp.zabara.parts.TableViewerPart;
 
-
-
-
+/**
+ * Handler, which writes changes in the user form of selected person to the model
+ * 
+ * @author SZabara
+ *
+ */
 public class SavePersonHandler extends AbstractHandler {
 
     @Override
@@ -25,15 +24,8 @@ public class SavePersonHandler extends AbstractHandler {
         String name = null;
         int group = 0;
         boolean swtDone = false;
-        IWorkbenchPage compositePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        IViewPart compositeViewPart = null;
-        try {
-            compositeViewPart = compositePage.showView("ua.test.rcp.zabara.view.composite");
-        } catch (PartInitException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        CompositePart compositePart = (CompositePart) compositeViewPart;
+
+        CompositePart compositePart = Utils.getCompositePart();
         try {
             name = compositePart.getMainComposite().getNameTextField().getText();
             group = Integer.parseInt(compositePart.getMainComposite().getGroupTextField().getText());
@@ -43,15 +35,7 @@ public class SavePersonHandler extends AbstractHandler {
                     "Your input was incorrect. Please, put the correct data");
         }
         if (Utils.isValidData(name, group)) {
-            IWorkbenchPage tablePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-            IViewPart tableViewPart = null;
-            try {
-                tableViewPart = tablePage.showView(TableViewerPart.ID);
-            } catch (PartInitException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            TableViewerPart tableViewerPart = (TableViewerPart) tableViewPart;
+            TableViewerPart tableViewerPart = Utils.getTableViewerPart();
             Person selectionPerson = tableViewerPart.getCurrentPerson();
 
             if (tableViewerPart.getCurrentPerson() == null) {
@@ -69,6 +53,4 @@ public class SavePersonHandler extends AbstractHandler {
         }
         return null;
     }
-    
-
 }

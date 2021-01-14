@@ -46,13 +46,13 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="ua.test.rcp.zabara.CompositePart"
+            class="ua.test.rcp.zabara.parts.CompositePart"
             id="ua.test.rcp.zabara.view.composite"
             name="CompositePart"
             restorable="true">
       </view>
       <view
-            class="ua.test.rcp.zabara.TableViewerPart"
+            class="ua.test.rcp.zabara.parts.TableViewerPart"
             id="ua.test.rcp.zabara.view.table"
             name="TableViewerPart"
             restorable="true">
